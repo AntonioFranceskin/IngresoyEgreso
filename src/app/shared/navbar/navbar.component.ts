@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app.reducer';
+import { Usuario } from 'src/app/models/usuario.model';
 
 @Component({
   selector: 'app-navbar',
@@ -18,7 +19,7 @@ export class NavbarComponent implements OnInit,OnDestroy {
   ngOnInit(): void {
 
     this.userSubscription = this.store.select('user').subscribe( (user: any)  => {
-      const usuario = {...user.user};
+      const usuario: Usuario = {...user.user};
       this.userLogeado = usuario.email;
     });
 }

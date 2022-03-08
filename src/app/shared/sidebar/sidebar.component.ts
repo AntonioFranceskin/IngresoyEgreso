@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app.reducer';
+import { Usuario } from 'src/app/models/usuario.model';
 import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
@@ -18,7 +19,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.userSubscription = this.store.select('user').subscribe( (user: any)  => {
-      const usuario = {...user.user};
+      const usuario: Usuario = {...user.user};
       this.userLogeado = usuario.nombre;
     });
   }
