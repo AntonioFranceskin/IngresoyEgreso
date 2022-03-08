@@ -45,23 +45,15 @@ export class RegisterComponent implements OnInit,OnDestroy {
     if(this.registroForm.invalid) return;
     const {nombre, correo, password} = this.registroForm.value;
     this.store.dispatch( ui.isLoading() );
-    // Swal.fire({
-    //   allowOutsideClick: false,
-    //   icon: 'info',
-    //   text: 'Por favor espere...'
-    // });
-    // Swal.showLoading();
     this.auth.crearUsuario(nombre,correo,password)
       .then(credenciales => { 
         this.store.dispatch( ui.stopLoading() );
-        // Swal.close();
         console.log(credenciales);
         this.router.navigate(['/']);
       })
       .catch( err => {
         console.error(err);
         this.store.dispatch( ui.stopLoading());
-        // Swal.close();
         Swal.fire({
           icon: 'error',
           title: 'Oops...',

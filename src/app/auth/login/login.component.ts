@@ -8,7 +8,6 @@ import { AuthService } from 'src/app/service/auth.service';
 import Swal from 'sweetalert2';
 import * as ui from '../../shared/ui.actions';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -29,14 +28,16 @@ export class LoginComponent implements OnInit,OnDestroy {
       correo: ['',[Validators.required,Validators.email]],
       password: ['',Validators.required],
     });
-
+    // Me  subscribo  al  store  seleccionando  solo  el  "ui"
+    // y  asigno  el  valor  del store  en  la  variable  this.cargando
     this.uiSubscription = this.store.select('ui').subscribe( ui => {
       this.cargando = ui.isLoading;
       console.log('cargando subs');
     });
-
 }
 
+
+// Es  importante  desubscribirse  del store para  evitar  problema 
 ngOnDestroy() {
 this.uiSubscription.unsubscribe();
 }
@@ -45,25 +46,18 @@ this.uiSubscription.unsubscribe();
   loginUsuario(){
     if(this.loginForm.invalid) return;
     const {correo, password} = this.loginForm.value;
+    // Hago  el  dispatch  con  isLoading para  empezar  el Loading
     this.store.dispatch( ui.isLoading() );
-
-    // Swal.fire({
-    //   allowOutsideClick: false,
-    //   icon: 'info',
-    //   text: 'Por favor espere...'
-    // });
-    // Swal.showLoading();
-    
     this.auth.loginUsuario(correo,password)
       .then(credenciales => { 
         console.log(credenciales);
-        // Swal.close();
+        // Hago  el  dispatch  con  stopLoading para cerrar  el Loading
         this.store.dispatch( ui.stopLoading() );
         this.router.navigate(['/']);
       })
       .catch( err => {
         console.error(err);
-        // Swal.close();
+        // Hago  el  dispatch  con  stopLoading para cerrar  el Loading
         this.store.dispatch( ui.stopLoading());
         Swal.fire({
           icon: 'error',
