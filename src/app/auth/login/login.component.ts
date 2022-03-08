@@ -32,14 +32,14 @@ export class LoginComponent implements OnInit,OnDestroy {
     // y  asigno  el  valor  del store  en  la  variable  this.cargando
     this.uiSubscription = this.store.select('ui').subscribe( ui => {
       this.cargando = ui.isLoading;
-      console.log('cargando subs');
+      console.log('cargando subs  Login ');
     });
 }
 
 
 // Es  importante  desubscribirse  del store para  evitar  problema 
 ngOnDestroy() {
-this.uiSubscription.unsubscribe();
+  if(this.uiSubscription != null) this.uiSubscription.unsubscribe();
 }
 
 

@@ -14,13 +14,14 @@ import { AuthService } from 'src/app/service/auth.service';
 })
 export class SidebarComponent implements OnInit {
   userSubscription: Subscription;
-  userLogeado: string = null;
+  usuario: Usuario = null;
   constructor( private auth: AuthService, private router: Router, private store: Store<AppState>) { }
 
   ngOnInit(): void {
     this.userSubscription = this.store.select('user').subscribe( (user: any)  => {
-      const usuario: Usuario = {...user.user};
-      this.userLogeado = usuario.nombre;
+      console.log(` Sidebar1 ${JSON.stringify(user)}`);
+      this.usuario = {...user.user};
+      console.log(` Sidebar2 ${JSON.stringify(this.usuario)}`);
     });
   }
 

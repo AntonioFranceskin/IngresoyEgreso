@@ -13,14 +13,13 @@ import { Usuario } from 'src/app/models/usuario.model';
 })
 export class NavbarComponent implements OnInit,OnDestroy {
   userSubscription: Subscription;
-  userLogeado: string = null;
+  usuario: Usuario = null;
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
 
     this.userSubscription = this.store.select('user').subscribe( (user: any)  => {
-      const usuario: Usuario = {...user.user};
-      this.userLogeado = usuario.email;
+      this.usuario = {...user.user};
     });
 }
 

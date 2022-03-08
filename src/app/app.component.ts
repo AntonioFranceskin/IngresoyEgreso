@@ -9,6 +9,8 @@ import { AuthService } from './service/auth.service';
 export class AppComponent {
   title = 'ingresoEgresoApp';
   constructor(private authServices: AuthService){
+    console.log('AppComponent Antes');
     this.authServices.initAuthListener();
+    console.log('AppComponent Despues');
   }
 }
