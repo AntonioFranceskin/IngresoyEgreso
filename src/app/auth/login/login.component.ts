@@ -7,6 +7,8 @@ import { AppState } from 'src/app/app.reducer';
 import { AuthService } from 'src/app/service/auth.service';
 import Swal from 'sweetalert2';
 import * as ui from '../../shared/ui.actions';
+import  *  as ingresoegresoaccion  from './../../ingreso-egreso/ingreso-egreso.actions';
+import  *  as useraccion  from './../../auth/auth.actions';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +34,6 @@ export class LoginComponent implements OnInit,OnDestroy {
     // y  asigno  el  valor  del store  en  la  variable  this.cargando
     this.uiSubscription = this.store.select('ui').subscribe( ui => {
       this.cargando = ui.isLoading;
-      console.log('cargando subs  Login ');
     });
 }
 
@@ -50,9 +51,10 @@ ngOnDestroy() {
     this.store.dispatch( ui.isLoading() );
     this.auth.loginUsuario(correo,password)
       .then(credenciales => { 
-        console.log(credenciales);
+        console.log(`loginUsuario ${JSON.stringify(credenciales)}`);
         // Hago  el  dispatch  con  stopLoading para cerrar  el Loading
         this.store.dispatch( ui.stopLoading() );
+        this.loginForm.reset();
         this.router.navigate(['/']);
       })
       .catch( err => {

@@ -49,6 +49,7 @@ export class RegisterComponent implements OnInit,OnDestroy {
       .then(credenciales => { 
         this.store.dispatch( ui.stopLoading() );
         console.log(credenciales);
+        this.registroForm.reset();
         this.router.navigate(['/']);
       })
       .catch( err => {

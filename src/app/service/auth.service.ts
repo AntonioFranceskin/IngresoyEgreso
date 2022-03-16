@@ -8,13 +8,18 @@ import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
 import * as authActions from '../auth/auth.actions';
+import * as ingresoegresoActions from '../ingreso-egreso/ingreso-egreso.actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   userSubscription: Subscription;
+  user1Subscription: Subscription;
+  private _user: Usuario;
 
+  get user(){ return this._user; }
+  
   constructor(
     public auth: AngularFireAuth, 
     public firestore: AngularFirestore, 
@@ -36,24 +41,36 @@ export class AuthService {
   }
 
   logout(){
+    this._user = null;
+    this.store.dispatch( authActions.unSetUser()  );
+    this.store.dispatch( ingresoegresoActions.unSetItems() );
+    if(this.userSubscription != null) this.userSubscription.unsubscribe();
     return this.auth.signOut();
   }
 
   initAuthListener() {
+    this.user1Subscription = this.store.select('user').subscribe( user1 => {
+      console.log(`Justo antes  de  initAuthListener  ${JSON.stringify(user1)}`);
+    });
+
+
+
     this.auth.authState.subscribe( fuser => {
+      console.log(fuser);
       if ( fuser ) {
-        // existe
+        console.log("Existe");
         this.userSubscription = this.firestore.doc(`${ fuser.uid }/usuario`).valueChanges()
           .subscribe( (firestoreUser: any) => {
-            console.log(`Metodo initAuthListener1  ${JSON.stringify(firestoreUser)}`);
             const user = Usuario.fromFirebase( firestoreUser );
-            console.log(`Metodo initAuthListener2  ${JSON.stringify(user)}`);
+            this._user = user;
             this.store.dispatch( authActions.setUser({ user }) );
           })
       } else {
-        // no existe
-        this.userSubscription.unsubscribe();
-        this.store.dispatch( authActions.unSetUser() );
+        console.log("No existe");
+        this._user = null;
+        this.store.dispatch( authActions.unSetUser()  );
+        this.store.dispatch( ingresoegresoActions.unSetItems() );
+        if(this.userSubscription != null) this.userSubscription.unsubscribe();
       }
     });
   }
