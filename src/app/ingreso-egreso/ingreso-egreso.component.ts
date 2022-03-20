@@ -32,7 +32,7 @@ export class IngresoEgresoComponent implements OnInit,OnDestroy {
     })
     this.uiSubscription = this.store.select('ui').subscribe( ui => {
       this.cargando = ui.isLoading;
-      console.log('cargando subs  Login ');
+      //console.log('cargando subs  Login ');
     });
   }
 
@@ -43,8 +43,8 @@ export class IngresoEgresoComponent implements OnInit,OnDestroy {
   guardar(){
     if(this.ingresoForm.invalid) return;
     this.store.dispatch( ui.isLoading() );
-    console.log(this.ingresoForm.value);
-    console.log(this.tipo);
+    //console.log(this.ingresoForm.value);
+    //console.log(this.tipo);
     const {descripcion, monto} = this.ingresoForm.value;
     const ingresoEgreso =  new IngresoEgreso(descripcion, monto, this.tipo, null);
     this.ingresoEgresoService.crearIngresoEgreso(ingresoEgreso)

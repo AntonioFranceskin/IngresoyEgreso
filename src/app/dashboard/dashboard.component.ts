@@ -26,17 +26,17 @@ export class DashboardComponent implements OnInit,OnDestroy {
     this.userSubs = this.store.select('user')
     .pipe(filter( auth => auth.user != null))
     .subscribe(({user}) =>{
-      console.log(`Dasborad ${JSON.stringify(user)}`);
+      //console.log(`Dasborad ${JSON.stringify(user)}`);
       this.igresoegresoSubs = this.ingresoEgresoService.initIngresoEgresosListener(user.uid).subscribe(ingresoegresosFB =>  {
-        console.log("dentro de dashboard");
-        console.log(ingresoegresosFB);
+       // console.log("dentro de dashboard");
+       // console.log(ingresoegresosFB);
         this.store.dispatch(accion.setItems({items: ingresoegresosFB}) )
       })
     })
   }
 
   ngOnDestroy() {
-    console.log("ngOnDestroy de Dashboard");
+   // console.log("ngOnDestroy de Dashboard");
     this.auth.initAuthListener();
     if(this.userSubs != null) this.userSubs.unsubscribe();
     if(this.igresoegresoSubs != null) this.igresoegresoSubs.unsubscribe();

@@ -51,14 +51,14 @@ ngOnDestroy() {
     this.store.dispatch( ui.isLoading() );
     this.auth.loginUsuario(correo,password)
       .then(credenciales => { 
-        console.log(`loginUsuario ${JSON.stringify(credenciales)}`);
+        //console.log(`loginUsuario ${JSON.stringify(credenciales)}`);
         // Hago  el  dispatch  con  stopLoading para cerrar  el Loading
         this.store.dispatch( ui.stopLoading() );
         this.loginForm.reset();
         this.router.navigate(['/']);
       })
       .catch( err => {
-        console.error(err);
+       // console.error(err);
         // Hago  el  dispatch  con  stopLoading para cerrar  el Loading
         this.store.dispatch( ui.stopLoading());
         Swal.fire({

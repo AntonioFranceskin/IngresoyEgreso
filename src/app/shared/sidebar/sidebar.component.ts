@@ -20,9 +20,9 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.userSubscription = this.store.select('user').subscribe( (user: any)  => {
-      console.log(` Sidebar1 ${JSON.stringify(user)}`);
+     // console.log(` Sidebar1 ${JSON.stringify(user)}`);
       this.usuario = {...user.user};
-      console.log(` Sidebar2 ${JSON.stringify(this.usuario)}`);
+     //console.log(` Sidebar2 ${JSON.stringify(this.usuario)}`);
     });
   }
 
@@ -38,7 +38,7 @@ export class SidebarComponent implements OnInit {
       this.router.navigate(['/login']);
     })
     .catch(err => {
-      console.log(err);
+      //console.log(err);
     })
   }
 

@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit,OnDestroy {
     });
     this.uiSubscription = this.store.select('ui').subscribe( ui => {
       this.cargando = ui.isLoading;
-      console.log('cargando subs Register');
+     //console.log('cargando subs Register');
     });
   }
 
@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit,OnDestroy {
     this.auth.crearUsuario(nombre,correo,password)
       .then(credenciales => { 
         this.store.dispatch( ui.stopLoading() );
-        console.log(credenciales);
+        //console.log(credenciales);
         this.registroForm.reset();
         this.router.navigate(['/']);
       })

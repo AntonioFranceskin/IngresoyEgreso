@@ -20,8 +20,8 @@ export class DetalleComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.ingresosegresosSubscription = this.store.select('ingresoEgreso').subscribe( ({items}) => {
-      console.log("justo antes  de DetalleComponent ");
-      console.log(items);
+     //console.log("justo antes  de DetalleComponent ");
+     //console.log(items);
       this.ingresoEgresos = items;
     })
   }
@@ -31,7 +31,7 @@ export class DetalleComponent implements OnInit, OnDestroy{
   }
 
   borrar(uidItem: string){
-    console.log(uidItem);
+    //console.log(uidItem);
     this.ingresoegresoServices.borrarIngresoEgresosListener(uidItem)
     .then( () => { Swal.fire('Registro borrado' , 'success');})
     .catch( (err) => {   Swal.fire('Error', err.message, 'error');})

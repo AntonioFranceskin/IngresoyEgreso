@@ -50,7 +50,7 @@ export class AuthService {
 
   initAuthListener() {
     this.user1Subscription = this.store.select('user').subscribe( user1 => {
-      console.log(`Justo antes  de  initAuthListener  ${JSON.stringify(user1)}`);
+      //console.log(`Justo antes  de  initAuthListener  ${JSON.stringify(user1)}`);
     });
 
 
@@ -58,7 +58,7 @@ export class AuthService {
     this.auth.authState.subscribe( fuser => {
       console.log(fuser);
       if ( fuser ) {
-        console.log("Existe");
+       //console.log("Existe");
         this.userSubscription = this.firestore.doc(`${ fuser.uid }/usuario`).valueChanges()
           .subscribe( (firestoreUser: any) => {
             const user = Usuario.fromFirebase( firestoreUser );
@@ -66,7 +66,7 @@ export class AuthService {
             this.store.dispatch( authActions.setUser({ user }) );
           })
       } else {
-        console.log("No existe");
+        //console.log("No existe");
         this._user = null;
         this.store.dispatch( authActions.unSetUser()  );
         this.store.dispatch( ingresoegresoActions.unSetItems() );
